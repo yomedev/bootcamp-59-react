@@ -1,0 +1,11 @@
+.stock {
+  text-transform: uppercase;
+}
+
+.inStock {
+  color: green
+}
+
+.outOfStock {
+  color: red
+}
