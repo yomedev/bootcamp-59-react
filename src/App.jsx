@@ -1,27 +1,56 @@
-import Link from "./components/Link/Link";
-import ProductCard from "./components/ProductCard/ProductCard";
-import productsJson from "./data/products.json";
+import { Component } from "react";
+import { Cart } from "./components/Cart";
+import { Header, Layout } from "./components/Layout";
+import { Modal } from "./components/Modal";
+import { ProductsList } from "./components/Products/ProductsList";
 
-console.log(productsJson);
+export default class App extends Component {
+  state = {
+    isModalOpen: false,
+  };
 
+  handleModalToggle = () => {
+    this.setState((prevState) => ({ isModalOpen: !prevState.isModalOpen }));
+  };
 
-const App = () => {
-  return (
-    <>
-      <Link />
-      <br />
-      <Link href="/about" alt="about" label="About" />
-      <ul>
-        {productsJson.map((product) => {
-          return (
-            <li key={product.id}>
-              <ProductCard {...product} />
-            </li>
-          );
-        })}
-      </ul>
-    </>
-  );
-};
+  render() {
+    const { isModalOpen } = this.state;
+    return (
+      <Layout>
+        <Header>Hello world</Header>
 
-export default App;
+        {isModalOpen && (
+          <Modal onModalClose={this.handleModalToggle} >
+            <Cart defaultQuantity={10} />
+          </Modal>
+        )}
+
+        <ProductsList onModalOpen={this.handleModalToggle} />
+      </Layout>
+    );
+  }
+}
+
+// const App = () => {
+//   return (
+//     <Layout>
+//       <Header>Hello world</Header>
+
+//       {/* {isModalOpen ? (
+//         <Modal>
+//           <Cart defaultQuantity={10} />
+//         </Modal>
+//       ) : null} */}
+
+//       {isModalOpen && (
+//         <Modal>
+//           <Cart defaultQuantity={10} />
+//         </Modal>
+//       )}
+
+//       <ProductsList />
+//     </Layout>
+//   );
+// };
+
+// export default App;
