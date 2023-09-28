@@ -1,26 +1,17 @@
 import { Component } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const ONE_PRODUCT_PRICE = 549
+const ONE_PRODUCT_PRICE = 549;
 
 export class Cart extends Component {
   state = {
-    quantity: this.props.defaultQuantity,
+    quantity: this.props.defaultQuantity || 1,
     plus: 0,
     minus: 0,
   };
 
-  // handleIncreaseQuantity = () => {
-  //   this.setState((prevState) => ({ quantity: prevState.quantity + 1 }));
-  // };
-
-  // handleDecreaseQuantity = () => {
-  //   this.setState((prevState) => ({ quantity: prevState.quantity - 1 }));
-  // };
-
   handleUpdateQuantity = (event) => {
     const { name } = event.currentTarget;
-    // this.setState((prevState) => ({ [name]: prevState[name] + 1 }));
     switch (name) {
       case "plus":
         this.setState((prevState) => ({ quantity: prevState.quantity + 1 }));
@@ -33,12 +24,12 @@ export class Cart extends Component {
   };
 
   getTotalPrice() {
-    return ONE_PRODUCT_PRICE * this.state.quantity
+    return ONE_PRODUCT_PRICE * this.state.quantity;
   }
 
   render() {
     const { quantity } = this.state;
-    const totalPrice = this.getTotalPrice()
+    const totalPrice = this.getTotalPrice();
     return (
       <section
         className="h-100 p-4 h-custom"
