@@ -10,6 +10,10 @@ import { FiPlus } from "react-icons/fi";
 
 const ALL_CATEGORY_VALUE = "all";
 
+const PRODUCTS_LOCAL_STORAGE_KEY = "products";
+
+// [1, 2] => [1, 2, 3]
+
 export class Products extends Component {
   state = {
     products: productsJson,
@@ -18,6 +22,24 @@ export class Products extends Component {
     category: ALL_CATEGORY_VALUE,
     search: "",
   };
+
+  componentDidMount() {
+    const localData = JSON.parse(
+      localStorage.getItem(PRODUCTS_LOCAL_STORAGE_KEY)
+    );
+    if (localData) {
+      this.setState({ products: localData });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (this.state.products !== prevState.products) {
+      localStorage.setItem(
+        PRODUCTS_LOCAL_STORAGE_KEY,
+        JSON.stringify(this.state.products)
+      );
+    }
+  }
 
   handleChangeSearch = (event) => {
     const { value } = event.target;

@@ -1,12 +1,14 @@
 import { Header, Layout } from "./components/Layout";
-// import { LoginForm } from "./components/LoginForm";
 import { Products } from "./components/Products";
+// import {Timer} from "./components/Timer"
+// import {Rerender} from "./components/Rerender"
 
 const App = () => {
   return (
     <Layout>
+      {/* <Rerender />
+      <Timer /> */}
       <Header>Hello world</Header>
-      {/* <LoginForm /> */}
       <Products />
     </Layout>
   );

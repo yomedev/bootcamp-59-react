@@ -12,7 +12,7 @@ export const CategoryFilter = ({ onChange, category }) => {
 
       <div className="d-flex">
         {categories.map(({ label, value }) => (
-          <div className="form-check me-4">
+          <div key={value} className="form-check me-4">
             <label className="form-check-label">
               <span>{label}</span>
               <input
