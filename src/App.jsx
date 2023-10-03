@@ -1,15 +1,13 @@
-import { Header, Layout } from "./components/Layout";
-import { Products } from "./components/Products";
-// import {Timer} from "./components/Timer"
-// import {Rerender} from "./components/Rerender"
+import { Layout } from "./components/Layout";
+import { Articles } from "./components/Articles";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <Layout>
-      {/* <Rerender />
-      <Timer /> */}
-      <Header>Hello world</Header>
-      <Products />
+      <Articles />
+      <ToastContainer />
     </Layout>
   );
 };
