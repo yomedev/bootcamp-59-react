@@ -24,12 +24,13 @@ export class Cart extends Component {
   };
 
   getTotalPrice() {
-    return ONE_PRODUCT_PRICE * this.state.quantity;
+    return this.props.price * this.state.quantity;
   }
 
   render() {
     const { quantity } = this.state;
     const totalPrice = this.getTotalPrice();
+    const { thumbnail, brand, title, price } = this.props;
     return (
       <section
         className="h-100 p-4 h-custom"
@@ -41,16 +42,16 @@ export class Cart extends Component {
 
         <div className="d-flex align-items-center mb-4 shadow-lg p-2 rounded">
           <img
-            src="https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+            src={thumbnail}
             className="img-fluid"
             style={{ width: "150px" }}
             alt="Generic placeholder"
           />
 
           <div className="ms-3">
-            <h5 className="text-primary">iPhone 9</h5>
-            <h6 style={{ color: "#9e9e9e" }}>Apple</h6>
-            <p className="fw-bold mb-0 me-5 pe-3">549$</p>
+            <h5 className="text-primary">{title}</h5>
+            <h6 style={{ color: "#9e9e9e" }}>{brand}</h6>
+            <p className="fw-bold mb-0 me-5 pe-3">{price}$</p>
           </div>
         </div>
         <div className="d-flex justify-content-center align-items-center mb-4 gap-4">

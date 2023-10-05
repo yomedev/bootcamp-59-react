@@ -1,18 +1,25 @@
 import { AndroidIcon } from "../AndroidIcon/AndroidIcon";
 import { AppleIcon } from "../AppleIcon/AppleIcon";
 import { useEffect, useState } from "react";
+import { getLocalData } from "../../helpers/getLocalData";
 
 const COUNTER_LOCAL_STORAGE_KEY = "counter";
 
-const getLocalData = (key, defaultValue = 0) => {
-  const localData = JSON.parse(localStorage.getItem(COUNTER_LOCAL_STORAGE_KEY));
-  console.log('getLocalData');
-  return localData ? localData[key] : defaultValue;
-};
-
 export const Counter = ({ defaultAndroid }) => {
-  const [android, setAndroid] = useState(() => getLocalData('android'));
-  const [iphone, setIphone] = useState(() => getLocalData('iphone'));
+  const [android, setAndroid] = useState(() =>
+    getLocalData({
+      lsKey: COUNTER_LOCAL_STORAGE_KEY,
+      key: "android",
+      defaultValue: defaultAndroid,
+    })
+  );
+  const [iphone, setIphone] = useState(() =>
+    getLocalData({
+      lsKey: COUNTER_LOCAL_STORAGE_KEY,
+      key: "iphone",
+      defaultValue: 0,
+    })
+  );
 
   const handleUpdate = (event) => {
     const { name } = event.target;

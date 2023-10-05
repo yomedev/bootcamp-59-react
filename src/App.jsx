@@ -1,36 +1,23 @@
 import { Layout } from "./components/Layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Articles } from "./components/Articles";
-import { AuthContext } from "./context/AuthContext";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { AuthProvider } from "./context/AuthContext";
+// import { Articles } from "./components/Articles";
+// import { Rerender } from "./components/Rerender/Rerender";
+// import { Memo } from "./components/Memo/Memo";
+import { Products } from "./components/Products/Products";
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  const [username, setUsername] = useState("");
-
-  const login = (password, name) => {
-    if (password === "123") {
-      setIsAuth(true);
-      setUsername(name);
-      return;
-    }
-    toast.error("Incorrect password");
-  };
-
-  const logout = () => {
-    setIsAuth(false);
-    setUsername("");
-  };
-
   return (
-    <AuthContext.Provider value={{username, isAuth, login, logout }}>
+    <AuthProvider>
       <Layout>
-        <Articles />
+        {/* <Rerender /> */}
+        <Products /> 
+         {/* <Memo /> */}
+        {/* <Articles /> */}
         <ToastContainer />
       </Layout>
-    </AuthContext.Provider>
+    </AuthProvider>
   );
 };
 

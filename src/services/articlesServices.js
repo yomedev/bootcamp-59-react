@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://newsapi.org/v2/";
 axios.defaults.params = {
-  apiKey: "8cb01996c0d34dbebd5fe5c1bf4080cf",
+  apiKey: "81a8a03a925b4f9598b82021fed677f7",
   pageSize: 6,
   searchIn: "title",
 };
