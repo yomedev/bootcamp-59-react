@@ -16,3 +16,14 @@ export const getArticlesService = async (query, page) => {
   });
   return data;
 };
+
+export const getSingeArticleService = async (query) => {
+  const { data } = await axios.get("everything", {
+    params: {
+      q: query,
+      searchIn: "title",
+      pageSize: 4,
+    },
+  });
+  return data.articles[0];
+};

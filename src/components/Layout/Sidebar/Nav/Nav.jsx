@@ -1,48 +1,46 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { Button } from "../../../Button";
-import { Modal } from "../../../Modal";
-import { TimerModal } from "../../../Timer/TimerModal";
 import { AuthContext } from "../../../../context/AuthContext";
+import { NavLink } from "react-router-dom";
 
 export const Nav = () => {
-  const [isTimerOpen, setIsTimerOpen] = useState(false);
-  const toggleTimer = () => setIsTimerOpen((prev) => !prev);
-
   const { logout } = useContext(AuthContext);
 
   return (
     <div className="d-flex flex-column justify-content-between h-100">
       <div className="d-flex flex-column justify-content-between">
         <h2 className="h3 mb-4">Welcome back!</h2>
-        <Button
+
+        <NavLink
+          to="/"
           style={{ textAlign: "left", marginLeft: "-10px" }}
-          className="btn-light"
-          disabled
+          className={({isActive}) => isActive ? "btn btn-primary" : "btn btn-light"}
         >
           Home page
-        </Button>
-        <Button
+        </NavLink>
+        <NavLink
+          to="/articles"
           style={{ textAlign: "left", marginLeft: "-10px" }}
-          className="btn-light"
-          disabled
+          className={({isActive}) => isActive ? "btn btn-primary" : "btn btn-light"}
         >
-          Create new post
-        </Button>
-        <Button
+          Articles list
+        </NavLink>
+        {/* <NavLink
+          to="/login"
           style={{ textAlign: "left", marginLeft: "-10px" }}
-          className="btn-light"
-          onClick={toggleTimer}
+          className={({isActive}) => isActive ? "btn btn-primary" : "btn btn-light"}
         >
-          Open timer
-        </Button>
+          Login
+        </NavLink> */}
+        <NavLink
+          to="/exercises"
+          style={{ textAlign: "left", marginLeft: "-10px" }}
+          className={({isActive}) => isActive ? "btn btn-primary" : "btn btn-light"}
+        >
+          React Exercises
+        </NavLink>
       </div>
-
-      {isTimerOpen && (
-        <Modal onModalClose={toggleTimer}>
-          <TimerModal />
-        </Modal>
-      )}
 
       <Button onClick={logout} className="btn-danger mt-auto">
         Log Out
