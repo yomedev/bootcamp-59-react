@@ -1,19 +1,21 @@
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import {Link} from 'react-router-dom'
+import { Link, useLocation } from "react-router-dom";
 
 import { cutString } from "../../helpers/cut-string";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 export const ArticlesItem = ({ article }) => {
-  const {isAuth} = useContext(AuthContext)
+  const { isAuth } = useContext(AuthContext);
+  const location = useLocation();
+  console.log(location);
   return (
     <div className="col-12 col-lg-6 col-xl-4 mb-4">
       <div className="card">
         <img
           height="250px"
           alt={article.title}
-          src={article.urlToImage || "/default_image.png"}
+          src={article.urlToImage ?? "/default_image.png"}
           className="card-img-top"
           style={{ objectFit: "cover" }}
         />
@@ -36,7 +38,11 @@ export const ArticlesItem = ({ article }) => {
                 Delete article
               </button>
 
-              <Link to={article.title} className="btn btn-primary ms-3">
+              <Link
+                state={{ from: location }}
+                to={article.title}
+                className="btn btn-primary ms-3"
+              >
                 Read article
               </Link>
             </div>
