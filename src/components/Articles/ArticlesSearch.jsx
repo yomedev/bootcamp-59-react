@@ -1,34 +1,65 @@
-import { Component } from "react";
+import { useState } from "react";
 
 import { Button } from "../Button";
+import { useSearchParams } from "react-router-dom";
 
-export class ArticlesSearch extends Component {
-  state = {
-    search: "",
-  };
+export const ArticlesSearch = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  handleChange = (event) => {
+  const query = searchParams.get("search") ?? "";
+
+  const [search, setSearch] = useState(query);
+
+  const handleChange = (event) => {
     const { value } = event.target;
-    this.setState({ search: value });
+    setSearch(value);
   };
 
-  handleSubmit = () => {
-    this.props.onSubmit(this.state.search)
+  const handleSubmit = () => {
+    setSearchParams({ search, page: 1 });
   };
 
-  render() {
-    const { search } = this.state;
-    return (
-      <div className="input-group mb-3">
-        <input
-          value={search}
-          onChange={this.handleChange}
-          type="text"
-          className="form-control"
-          placeholder="Type to search..."
-        />
-        <Button onClick={this.handleSubmit}>Search</Button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="input-group mb-3">
+      <input
+        value={search}
+        onChange={handleChange}
+        type="text"
+        className="form-control"
+        placeholder="Type to search..."
+      />
+      <Button onClick={handleSubmit}>Search</Button>
+    </div>
+  );
+};
+
+// export class ArticlesSearch extends Component {
+//   state = {
+//     search: "",
+//   };
+
+//   handleChange = (event) => {
+//     const { value } = event.target;
+//     this.setState({ search: value });
+//   };
+
+//   handleSubmit = () => {
+//     this.props.onSubmit(this.state.search)
+//   };
+
+//   render() {
+//     const { search } = this.state;
+//     return (
+//       <div className="input-group mb-3">
+//         <input
+//           value={search}
+//           onChange={this.handleChange}
+//           type="text"
+//           className="form-control"
+//           placeholder="Type to search..."
+//         />
+//         <Button onClick={this.handleSubmit}>Search</Button>
+//       </div>
+//     );
+//   }
+// }

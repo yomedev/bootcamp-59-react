@@ -40,9 +40,9 @@ export const ProductsPage = () => {
 
   const handleChangeInStock = () => setIsInStock((prev) => !prev);
 
-  const handleModalShow = (productId) => {
+  const handleModalShow = (product) => {
     setIsModalShow(true);
-    modalProduct.current = products.find(({ id }) => id === productId);
+    modalProduct.current = product;
   };
 
   const handleModalClose = () => setIsModalShow(false);
@@ -59,7 +59,6 @@ export const ProductsPage = () => {
   };
 
   const filteredProducts = useMemo(() => {
-    console.log("applyFilters");
     let filteredProducts = [...products];
     filteredProducts = filteredProducts.filter(({ title }) =>
       title.toLowerCase().includes(search.toLowerCase().trim())
@@ -71,12 +70,12 @@ export const ProductsPage = () => {
     <>
       <div className="d-flex align-items-center mb-5">
         <InStockFilter
-          isChecked={isInStock}
-          onChangeInStock={handleChangeInStock}
+          checked={isInStock}
+          onChange={handleChangeInStock}
         />
         <CategoryFilter
           category={category}
-          onChangeCategory={handleChangeCategory}
+          onChange={handleChangeCategory}
         />
         <button
           type="button"
@@ -88,14 +87,14 @@ export const ProductsPage = () => {
       </div>
 
       <SearchInput
-        search={search}
-        onChangeSearch={handleChangeSearch}
-        onResetSearch={handleResetSearch}
+        value={search}
+        onChange={handleChangeSearch}
+        onReset={handleResetSearch}
       />
       <ProductsList
         products={filteredProducts}
-        onDeleteProduct={handleDeleteProduct}
-        onModalShow={handleModalShow}
+        onRemoveProduct={handleDeleteProduct}
+        onModalOpen={handleModalShow}
       />
       {isModalShow && (
         <Modal onModalClose={handleModalClose}>

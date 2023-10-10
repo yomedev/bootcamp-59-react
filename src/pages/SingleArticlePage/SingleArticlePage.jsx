@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 
 import { Loader } from "../../components/Loader";
 import { getSingeArticleService } from "../../services/articlesServices";
 
 export const SingleArticlePage = () => {
   const { articleId } = useParams();
-  // const articleId =
-  //   "'You made it through winter': Anthony Scaramucci shares 3 reasons why he's still bullish on bitcoin";
+
+  const location = useLocation();
+  console.log(location.state);
+  const prevLocation = location.state?.from ?? "/articles";
 
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -35,6 +37,9 @@ export const SingleArticlePage = () => {
 
   return (
     <>
+      <Link to={prevLocation} className="btn btn-primary my-3">
+        Back
+      </Link>
       <img
         src={article.urlToImage || "/default_image.png"}
         alt={article.title}
@@ -45,7 +50,10 @@ export const SingleArticlePage = () => {
 
       <div>{article.description}</div>
 
-      {/* <div dangerouslySetInnerHTML={{ __html: article.content.replace(/\n/g, '<br/>') }} /> */}
+      <Link state={location.state} to="comments" className="btn btn-primary my-4">
+        Vew post comments
+      </Link>
+      <Outlet />
     </>
   );
 };

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import {AndroidIcon} from "../../../components/AndroidIcon/AndroidIcon";
-import {AppleIcon} from "../../../components/AppleIcon/AppleIcon";
+import { AndroidIcon } from "../../../components/AndroidIcon/AndroidIcon";
+import { AppleIcon } from "../../../components/AppleIcon/AppleIcon";
 import { useState } from "react";
 import { getLocalData } from "../../../helpers/getLocalData";
 
 const LOCAL_STORAGE_PHONES_KEY = "phones";
 
-export const CounterPage = ({ defaultAndroid }) => {
+export const CounterPage = ({ defaultAndroid = 0 }) => {
   const [android, setAndroid] = useState(
     getLocalData({
       lsKey: LOCAL_STORAGE_PHONES_KEY,

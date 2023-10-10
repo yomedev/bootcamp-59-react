@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const ONE_PRODUCT_PRICE = 549;
 
 export class Cart extends Component {
   state = {
