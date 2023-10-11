@@ -1,82 +1,39 @@
-import { InStockFilter } from "../../../components/Products/InStockFilter";
-import { SearchInput } from "../../../components/Products/SearchInput";
-import { CategoryFilter } from "../../../components/Products/CategoryFilter";
-import productsJson from "../../../data/products.json";
-import { ProductsList } from "../../../components/Products/ProductsList";
-import { Modal } from "../../../components/Modal/Modal";
-import { Cart } from "../../../components/Cart/Cart";
 import { FiPlus } from "react-icons/fi";
-import { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
-import { getLocalData } from "../../../helpers/getLocalData";
-import { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Cart } from "../../../components/Cart/Cart";
+import { Modal } from "../../../components/Modal/Modal";
+import { ProductsList } from "../../../components/Products/ProductsList";
+import { SearchInput } from "../../../components/Products/SearchInput";
+import productsJson from "../../../data/products.json";
+import {
+  addProductAction
+} from "../../../redux/products/productsActions";
 
-const PRODUCTS_LOCALSTORAGE_KEY = "products";
+// const PRODUCTS_LOCALSTORAGE_KEY = "products";
 
 export const ProductsPage = () => {
-  const [products, setProducts] = useState(() =>
-    getLocalData({
-      lsKey: PRODUCTS_LOCALSTORAGE_KEY,
-      defaultValue: productsJson,
-    })
-  );
-  const [isModalShow, setIsModalShow] = useState(false);
-  const [isInStock, setIsInStock] = useState(false);
-  const [category, setCategory] = useState("");
-  const [search, setSearch] = useState("");
+  const isModalOpen = useSelector((state) => state.products.isModalOpen);
 
-  const modalProduct = useRef(null);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    localStorage.setItem(PRODUCTS_LOCALSTORAGE_KEY, JSON.stringify(products));
-  }, [products]);
+  // const [isInStock, setIsInStock] = useState(false);
+  // const [category, setCategory] = useState("");
 
-  const handleChangeSearch = (event) => setSearch(event.target.value);
+  // const handleChangeCategory = (event) => setCategory(event.target.value);
 
-  const handleResetSearch = () => setSearch("");
-
-  const handleChangeCategory = (event) => setCategory(event.target.value);
-
-  const handleChangeInStock = () => setIsInStock((prev) => !prev);
-
-  const handleModalShow = (product) => {
-    setIsModalShow(true);
-    modalProduct.current = product;
-  };
-
-  const handleModalClose = () => setIsModalShow(false);
-
-  const handleDeleteProduct = (productId) =>
-    setProducts((prev) => prev.filter(({ id }) => id !== productId));
+  // const handleChangeInStock = () => setIsInStock((prev) => !prev);
 
   const handleAddProduct = () => {
     const randomIndex = Math.floor(Math.random() * productsJson.length);
-    setProducts((prev) => [
-      { ...productsJson[randomIndex], id: Date.now() },
-      ...prev,
-    ]);
+    const newProduct = { ...productsJson[randomIndex], id: Date.now() };
+    dispatch(addProductAction(newProduct));
   };
-
-  const filteredProducts = useMemo(() => {
-    let filteredProducts = [...products];
-    filteredProducts = filteredProducts.filter(({ title }) =>
-      title.toLowerCase().includes(search.toLowerCase().trim())
-    );
-    return filteredProducts;
-  }, [products, search]);
 
   return (
     <>
       <div className="d-flex align-items-center mb-5">
-        <InStockFilter
-          checked={isInStock}
-          onChange={handleChangeInStock}
-        />
-        <CategoryFilter
-          category={category}
-          onChange={handleChangeCategory}
-        />
+        {/* <InStockFilter checked={isInStock} onChange={handleChangeInStock} />
+        <CategoryFilter category={category} onChange={handleChangeCategory} /> */}
         <button
           type="button"
           className="btn btn-primary btn-lg ms-auto"
@@ -86,19 +43,11 @@ export const ProductsPage = () => {
         </button>
       </div>
 
-      <SearchInput
-        value={search}
-        onChange={handleChangeSearch}
-        onReset={handleResetSearch}
-      />
-      <ProductsList
-        products={filteredProducts}
-        onRemoveProduct={handleDeleteProduct}
-        onModalOpen={handleModalShow}
-      />
-      {isModalShow && (
-        <Modal onModalClose={handleModalClose}>
-          <Cart {...modalProduct.current} defaultCounter={1} />
+      <SearchInput />
+      <ProductsList />
+      {isModalOpen && (
+        <Modal>
+          <Cart/>
         </Modal>
       )}
     </>
