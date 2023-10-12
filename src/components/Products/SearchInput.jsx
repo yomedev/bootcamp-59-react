@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeSearchAction } from "../../redux/products/productsActions";
+import { changeSearch } from "../../redux/products/productsSlice";
 
 export const SearchInput = () => {
   const search = useSelector((state) => state.products.search);
@@ -7,14 +7,14 @@ export const SearchInput = () => {
   return (
     <div className="input-group input-group-lg mb-5">
       <input
-        onChange={(event) => dispatch(changeSearchAction(event.target.value))}
+        onChange={(event) => dispatch(changeSearch(event.target.value))}
         value={search}
         type="text"
         className="form-control"
         placeholder="Type to search ..."
       />
       <button
-        onClick={() => dispatch(changeSearchAction(""))}
+        onClick={() => dispatch(changeSearch(""))}
         className="btn btn-outline-secondary"
         type="button"
       >

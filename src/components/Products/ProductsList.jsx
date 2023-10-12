@@ -3,7 +3,7 @@ import { NotFoundProducts } from "./NotFoundProducts";
 import { ProductItem } from "./ProductItem";
 import { useMemo } from "react";
 
-export const ProductsList = ({ onRemoveProduct, onModalOpen }) => {
+export const ProductsList = () => {
   const products = useSelector((state) => state.products.data);
   const search = useSelector((state) => state.products.search);
 

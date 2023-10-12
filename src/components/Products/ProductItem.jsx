@@ -1,18 +1,20 @@
 import clsx from "clsx";
 import { FaTrash } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
-import { deleteProductAction, toggleModalAction } from "../../redux/products/productsActions";
+import {
+  deleteProduct,
+  toggleModal,
+  updateCartProduct,
+} from "../../redux/products/productsSlice";
 
-export const ProductItem = ({
-  id,
-  title,
-  price,
-  stock,
-  brand,
-  thumbnail,
-}) => {
+export const ProductItem = ({ id, title, price, stock, brand, thumbnail }) => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const handleAddToCart = () => {
+    dispatch(toggleModal());
+    dispatch(updateCartProduct({ title, price, brand, thumbnail }));
+  };
+
   return (
     <div className="card shadow-sm mb-4">
       <div className="card-body">
@@ -52,14 +54,14 @@ export const ProductItem = ({
               <h5 className="mb-0">${price}</h5>
             </div>
             <button
-              onClick={() => dispatch(toggleModalAction())}
+              onClick={handleAddToCart}
               type="button"
               className="btn btn-primary btn-lg me-4"
             >
               Add to cart
             </button>
             <button
-              onClick={() => dispatch(deleteProductAction(id))}
+              onClick={() => dispatch(deleteProduct(id))}
               type="button"
               style={{ backgroundColor: "transparent", border: "none" }}
             >

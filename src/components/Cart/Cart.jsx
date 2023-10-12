@@ -1,9 +1,15 @@
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { DECREASE, INCREASE, QUANTITY } from "../../redux/counter/counterTypes";
+import {
+  decreaseAction,
+  increaseAction,
+  quantityAction,
+} from "../../redux/counter/counterReducer";
 
-export const Cart = ({ thumbnail, title, brand, price }) => {
+export const Cart = () => {
   const quantity = useSelector((state) => state.quantity);
+
+  const product = useSelector((state) => state.products.cartProduct);
 
   const dispatch = useDispatch();
 
@@ -12,17 +18,23 @@ export const Cart = ({ thumbnail, title, brand, price }) => {
 
     switch (name) {
       case "plus":
-        dispatch({ type: INCREASE });
+        dispatch(increaseAction());
         break;
       case "minus":
-        dispatch({ type: DECREASE });
+        dispatch(decreaseAction());
         break;
       case "quantity":
-        dispatch({ type: QUANTITY, payload: Number(value) })
+        dispatch(quantityAction(Number(value)));
         break;
       default:
     }
   };
+
+  if (!product) {
+    return <></>;
+  }
+
+  const { title, brand, price, thumbnail } = product;
 
   const getTotalPrice = () => {
     return quantity * price;
