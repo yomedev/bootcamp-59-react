@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useDispatch } from "react-redux";
-import { toggleModalAction } from "../../redux/products/productsActions";
+import { toggleModal } from "../../redux/products/productsSlice";
 
 const modalRoot = document.getElementById("modal-root");
 
@@ -13,7 +13,7 @@ export const Modal = ({children }) => {
 
   const handleBackdrop = (event) => {
     if (event.target === event.currentTarget) {
-      dispatch(toggleModalAction());
+      dispatch(toggleModal());
     }
   };
   
@@ -22,7 +22,7 @@ export const Modal = ({children }) => {
     const handleEscape = (event) => {
       if (event.code === "Escape") {
         console.log(event.code);
-        dispatch(toggleModalAction());;
+        dispatch(toggleModal());
       }
     };
     document.addEventListener("keydown", handleEscape);
@@ -50,7 +50,7 @@ export const Modal = ({children }) => {
                 type="button"
                 className="btn-close"
                 aria-label="Close"
-                onClick={() => dispatch(toggleModalAction())}
+                onClick={() => dispatch(toggleModal())}
               />
             </div>
 
