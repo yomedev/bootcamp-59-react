@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SingleArticlePage from "./pages/SingleArticlePage";
 import CommentsPage from "./pages/SingleArticlePage/CommentsPage";
+import NewArticlePage from "./pages/NewArticlePage";
 const ArticlesPage = lazy(() => import("./pages/ArticlesPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const ExercisesPage = lazy(() => import("./pages/ExercisesPage"));
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/new-article" element={<NewArticlePage />} />
           <Route path="/articles/:articleId" element={<SingleArticlePage />}>
             <Route path="comments" element={<CommentsPage />} />
           </Route>

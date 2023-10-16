@@ -4,11 +4,19 @@ import { Link, useLocation } from "react-router-dom";
 import { cutString } from "../../helpers/cut-string";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { deleteArticleService } from "../../services/articlesServices";
+import { toast } from "react-toastify";
 
 export const ArticlesItem = ({ article }) => {
   const { isAuth } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
+
+  const handleDelete = () => {
+    deleteArticleService(article.id)
+      .then(() => toast.success("Deleted"))
+      .catch(() => toast.error("Error"));
+  };
+
   return (
     <div className="col-12 col-lg-6 col-xl-4 mb-4">
       <div className="card">
@@ -23,7 +31,7 @@ export const ArticlesItem = ({ article }) => {
         <div className="card-body">
           <h5 className="card-title">{article.title}</h5>
 
-          <p className="card-text">{cutString(article.description, 60)}</p>
+          <p className="card-text">{cutString(article.content, 60)}</p>
 
           <ul className="list-group list-group-flush mb-4">
             <li className="list-group-item">Author: {article.author}</li>
@@ -34,13 +42,17 @@ export const ArticlesItem = ({ article }) => {
 
           {isAuth && (
             <div className="d-flex">
-              <button type="button" className="btn btn-danger">
+              <button
+                onClick={handleDelete}
+                type="button"
+                className="btn btn-danger"
+              >
                 Delete article
               </button>
 
               <Link
                 state={{ from: location }}
-                to={article.title}
+                to={article.id}
                 className="btn btn-primary ms-3"
               >
                 Read article

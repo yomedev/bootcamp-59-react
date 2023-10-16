@@ -11,17 +11,14 @@ import { useSearchParams } from "react-router-dom";
 
 export const ArticlesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  
 
   const page = searchParams.get("page") ?? 1;
   const query = searchParams.get("search") ?? "";
 
   const queryParams = useMemo(() => {
-    console.log("getQueryParams");
     return Object.fromEntries(searchParams.entries());
   }, [searchParams]);
 
-  console.log(queryParams);
 
   const fetchArticles = useCallback(
     () => getArticlesService(query, page),
@@ -32,7 +29,7 @@ export const ArticlesPage = () => {
     setSearchParams({ ...queryParams, page });
   };
 
-  const { data, status } = useFetch(fetchArticles);
+  const { data: articles, status } = useFetch(fetchArticles);
 
   if (status === fetchStatus.LOADING || status === fetchStatus.IDLE) {
     return <ArticlesLoader />;
@@ -42,15 +39,13 @@ export const ArticlesPage = () => {
     return <ArticlesError />;
   }
 
-  const { articles } = data;
-
   return (
     <>
       <ArticlesSearch />
       <div className="container-fluid g-0">
         <div className="row">
           {articles?.map((article) => (
-            <ArticlesItem key={article.url} article={article} />
+            <ArticlesItem key={article.id} article={article} />
           ))}
         </div>
       </div>

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 
 import { Loader } from "../../components/Loader";
-import { getSingeArticleService } from "../../services/articlesServices";
+import { getSingleArticleService } from "../../services/articlesServices";
 
 export const SingleArticlePage = () => {
   const { articleId } = useParams();
@@ -19,7 +19,7 @@ export const SingleArticlePage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    getSingeArticleService(articleId)
+    getSingleArticleService(articleId)
       .then(setArticle)
       .catch(() => {
         toast.error("Something went wrong!");
@@ -48,7 +48,7 @@ export const SingleArticlePage = () => {
       />
       <h1 className="mb-5">{article.title}</h1>
 
-      <div>{article.description}</div>
+      <div>{article.content}</div>
 
       <Link state={location.state} to="comments" className="btn btn-primary my-4">
         Vew post comments
