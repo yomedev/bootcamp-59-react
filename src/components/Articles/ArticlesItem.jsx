@@ -4,17 +4,17 @@ import { Link, useLocation } from "react-router-dom";
 import { cutString } from "../../helpers/cut-string";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { deleteArticleService } from "../../services/articlesServices";
-import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { deleteArticleThunk } from "../../redux/articles/articlesThunk";
 
 export const ArticlesItem = ({ article }) => {
   const { isAuth } = useContext(AuthContext);
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
   const handleDelete = () => {
-    deleteArticleService(article.id)
-      .then(() => toast.success("Deleted"))
-      .catch(() => toast.error("Error"));
+    dispatch(deleteArticleThunk(article.id));
   };
 
   return (

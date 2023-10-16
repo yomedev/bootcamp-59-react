@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 
 import { Loader } from "../../components/Loader";
 import { getArticleInfo } from "./helpers";
-import { createArticleService } from "../../services/articlesServices";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createArticleThunk } from "../../redux/articles/articlesThunk";
 
 const { title, content, author, urlToImage, publishedAt } = getArticleInfo();
 
@@ -18,10 +19,11 @@ const initialState = {
 };
 
 export const NewArticlePage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [form, setForm] = useState(() => getArticleInfo());
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,14 +40,11 @@ export const NewArticlePage = () => {
       toast.error("Fill all required fields!");
       return;
     }
-    setIsLoading(true);
-    createArticleService(form)
-      .then((data) => {
-        toast.success("Article was successfully created!");
-        navigate(`/articles/${data.id}`);
-      })
-      .catch(() => toast.error("Something went wrong"))
-      .finally(() => setIsLoading(false));
+
+    dispatch(createArticleThunk(form))
+      .unwrap()
+      .then((data) => navigate(`/articles/${data.id}`))
+      .catch(() => toast.error("Error"));
   };
 
   return (

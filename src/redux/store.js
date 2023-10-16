@@ -12,6 +12,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { articlesReducer } from "./articles/articlesSlice";
 
 const config = {
   key: "products",
@@ -21,11 +22,15 @@ const config = {
 
 const persistedProductsReducer = persistReducer(config, productsReducer);
 
-// export const store1 = createStore(reducer, composeWithDevTools());
+// const customMiddleware = (store) => (next) => (action) => {
+//   return next(action);
+// };
+
 export const store = configureStore({
   reducer: {
     quantity: counterReducer,
     products: persistedProductsReducer,
+    articles: articlesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
