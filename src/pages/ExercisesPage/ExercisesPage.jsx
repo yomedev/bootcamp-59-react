@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { Loader } from "../../components/Loader";
 
 const subPages = [
+  { href: "middleware", title: "Middleware" },
   { href: "products", title: "Products" },
   { href: "counter", title: "Counter" },
 ];
