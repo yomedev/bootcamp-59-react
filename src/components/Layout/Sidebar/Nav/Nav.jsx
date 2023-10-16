@@ -26,13 +26,13 @@ export const Nav = () => {
         >
           Articles list
         </NavLink>
-        {/* <NavLink
-          to="/login"
+        <NavLink
+          to="/new-article"
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({isActive}) => isActive ? "btn btn-primary" : "btn btn-light"}
         >
-          Login
-        </NavLink> */}
+          Create article
+        </NavLink>
         <NavLink
           to="/exercises"
           style={{ textAlign: "left", marginLeft: "-10px" }}
