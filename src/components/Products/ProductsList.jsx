@@ -1,31 +1,34 @@
 import { useSelector } from "react-redux";
 import { NotFoundProducts } from "./NotFoundProducts";
 import { ProductItem } from "./ProductItem";
-import { useMemo } from "react";
+import { useState } from "react";
+import {
+  selectFilteredProducts,
+  selectTotalWithDiscount,
+} from "../../redux/products/productsSelectors";
 
 export const ProductsList = () => {
-  const products = useSelector((state) => state.products.data);
-  const search = useSelector((state) => state.products.search);
+  const [counter, setCounter] = useState(0);
 
-  const filteredProducts = useMemo(() => {
-    let filteredProducts = [...products];
-    filteredProducts = filteredProducts.filter(({ title }) =>
-      title.toLowerCase().includes(search.toLowerCase().trim())
-    );
-    return filteredProducts;
-  }, [products, search]);
+  const filteredProducts = useSelector(selectFilteredProducts);
 
-  if (!products?.length) {
+  const totalWithDiscount = useSelector(selectTotalWithDiscount);
+
+  if (!filteredProducts?.length) {
     return <NotFoundProducts />;
   }
 
   return (
     <section className="h-100 h-custom">
+      <button
+        className="btn btn-primary"
+        onClick={() => setCounter((prev) => prev + 1)}
+      >
+        {counter}
+      </button>
+      <p>Total with discount: {totalWithDiscount}</p>
       {filteredProducts.map((product) => (
-        <ProductItem
-          key={product.id}
-          {...product}
-        />
+        <ProductItem key={product.id} {...product} />
       ))}
     </section>
   );
