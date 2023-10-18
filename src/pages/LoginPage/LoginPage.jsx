@@ -1,30 +1,37 @@
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginThunk } from "../../redux/users/usersThunk";
+import { toast } from "react-toastify";
 
 const year = new Date().getFullYear();
 
+const initialState = {
+  email: "",
+  password: "",
+};
+
 export const LoginPage = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState(initialState);
 
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
 
-  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
-    setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+    const { name, value } = event.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(form);
-    login(form.password, form.email);
-    setForm({ email: "", password: "" });
-    navigate("/articles", { replace: true})
+    dispatch(loginThunk(form))
+      .unwrap()
+      .then(() => {
+        navigate("/articles");
+      })
+      .catch((error) => toast.error(error.message));
   };
 
   return (
@@ -59,6 +66,10 @@ export const LoginPage = () => {
           />
           <label htmlFor="pass">Password</label>
         </div>
+
+        <Link to="/join" className="d-block my-4">
+          Dont have account?
+        </Link>
 
         <button className="w-100 btn btn-lg btn-primary mt-4" type="submit">
           Sign in
