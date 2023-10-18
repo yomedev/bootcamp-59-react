@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { articlesReducer } from "./articles/articlesSlice";
+import { usersReducer } from "./users/usersSlice";
 
 const config = {
   key: "products",
@@ -20,7 +21,15 @@ const config = {
   whitelist: ["data"],
 };
 
+const usersConfig = {
+  key: "token",
+  storage,
+  whitelist: ["token"],
+};
+
 const persistedProductsReducer = persistReducer(config, productsReducer);
+
+const persistedUsersReducer = persistReducer(usersConfig, usersReducer);
 
 // const customMiddleware = (store) => (next) => (action) => {
 //   return next(action);
@@ -31,6 +40,7 @@ export const store = configureStore({
     quantity: counterReducer,
     products: persistedProductsReducer,
     articles: articlesReducer,
+    user: persistedUsersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

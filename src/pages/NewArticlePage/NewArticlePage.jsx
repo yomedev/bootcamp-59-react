@@ -8,19 +8,19 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createArticleThunk } from "../../redux/articles/articlesThunk";
 
-const { title, content, author, urlToImage, publishedAt } = getArticleInfo();
+const { title, content, urlToImage } = getArticleInfo();
 
 const initialState = {
   title,
   content,
   urlToImage,
-  author,
-  publishedAt,
 };
 
 export const NewArticlePage = () => {
   const [isLoading] = useState(false);
-  const [form, setForm] = useState(() => getArticleInfo());
+  const [form, setForm] = useState(() =>
+    getArticleInfo(["title", "content", "urlToImage"])
+  );
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ export const NewArticlePage = () => {
 
     dispatch(createArticleThunk(form))
       .unwrap()
-      .then((data) => navigate(`/articles/${data.id}`))
+      .then((data) => navigate(`/articles/${data._id}`))
       .catch(() => toast.error("Error"));
   };
 

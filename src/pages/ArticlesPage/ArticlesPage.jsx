@@ -8,13 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { getArticlesThunk } from "../../redux/articles/articlesThunk";
 import { useEffect } from "react";
 
+const PER_PAGE = 6
+
 export const ArticlesPage = () => {
-  const { data: articles, status } = useSelector((state) => state.articles);
-  const dispatch = useDispatch()
+  const { data, status } = useSelector((state) => state.articles);
+  const { articles, total } = data;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getArticlesThunk())
-  }, [dispatch])
+    dispatch(getArticlesThunk());
+  }, [dispatch]);
 
   if (status === fetchStatus.LOADING || status === fetchStatus.IDLE) {
     return <ArticlesLoader />;
@@ -24,20 +27,22 @@ export const ArticlesPage = () => {
     return <ArticlesError />;
   }
 
+  const pageAmount = Math.ceil(total / PER_PAGE)
+
   return (
     <>
       <ArticlesSearch />
       <div className="container-fluid g-0">
         <div className="row">
           {articles?.map((article) => (
-            <ArticlesItem key={article.id} article={article} />
+            <ArticlesItem key={article._id} article={article} />
           ))}
         </div>
       </div>
 
       <div className="pagination">
         <div className="btn-group my-4 mx-auto btn-group-lg">
-          {[...Array(5)].map((_, index) => (
+          {[...Array(pageAmount)].map((_, index) => (
             <Button key={index}>{index + 1}</Button>
           ))}
         </div>

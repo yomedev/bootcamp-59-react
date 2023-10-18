@@ -2,19 +2,19 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Link, useLocation } from "react-router-dom";
 
 import { cutString } from "../../helpers/cut-string";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteArticleThunk } from "../../redux/articles/articlesThunk";
+import { selectUserData } from "../../redux/users/usersSelectors";
 
 export const ArticlesItem = ({ article }) => {
-  const { isAuth } = useContext(AuthContext);
   const location = useLocation();
+
+  const user = useSelector(selectUserData);
 
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(deleteArticleThunk(article.id));
+    dispatch(deleteArticleThunk(article._id));
   };
 
   return (
@@ -29,19 +29,19 @@ export const ArticlesItem = ({ article }) => {
         />
 
         <div className="card-body">
-          <h5 className="card-title">{article.title}</h5>
+          <h5 className="card-title">{cutString(article.title, 60)}</h5>
 
           <p className="card-text">{cutString(article.content, 60)}</p>
 
           <ul className="list-group list-group-flush mb-4">
             <li className="list-group-item">Author: {article.author}</li>
             <li className="list-group-item">
-              Created: {formatDistanceToNow(new Date(article.publishedAt))}
+              Created: {formatDistanceToNow(new Date(article.createdAt))}
             </li>
           </ul>
 
-          {isAuth && (
-            <div className="d-flex">
+          <div className="d-flex">
+            {user?._id === article.userId && (
               <button
                 onClick={handleDelete}
                 type="button"
@@ -49,16 +49,16 @@ export const ArticlesItem = ({ article }) => {
               >
                 Delete article
               </button>
+            )}
 
-              <Link
-                state={{ from: location }}
-                to={article.id}
-                className="btn btn-primary ms-3"
-              >
-                Read article
-              </Link>
-            </div>
-          )}
+            <Link
+              state={{ from: location }}
+              to={article._id}
+              className="btn btn-primary ms-3"
+            >
+              Read article
+            </Link>
+          </div>
         </div>
       </div>
     </div>

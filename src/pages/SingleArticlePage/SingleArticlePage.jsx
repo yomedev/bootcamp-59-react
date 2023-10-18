@@ -10,7 +10,6 @@ export const SingleArticlePage = () => {
   const { articleId } = useParams();
 
   const location = useLocation();
-  console.log(location.state);
   const prevLocation = location.state?.from ?? "/articles";
 
   const [article, setArticle] = useState(null);

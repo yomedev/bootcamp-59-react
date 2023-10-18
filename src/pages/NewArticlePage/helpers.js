@@ -112,7 +112,13 @@ const articles = [
   },
 ];
 
-export const getArticleInfo = () => {
+export const getArticleInfo = (keys) => {
+  if (keys) {
+    return keys.reduce((acc, key) => {
+      acc[key] = articles[getRandomIndex()][key];
+      return acc;
+    }, {});
+  }
   return {
     publishedAt: articles[getRandomIndex()].publishedAt,
     author: articles[getRandomIndex()].author,

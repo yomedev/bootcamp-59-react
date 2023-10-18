@@ -1,27 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../../../Button";
 import { NavLink } from "react-router-dom";
-import { selectUserName } from "../../../../redux/users/usersSelectors";
-import { logoutThunk } from "../../../../redux/users/usersThunk";
 
-export const Nav = () => {
-  const username = useSelector(selectUserName);
-
-  const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(logoutThunk());
-  };
-
+export const NotAuth = () => {
   return (
     <div className="d-flex flex-column justify-content-between h-100">
       <div className="d-flex flex-column justify-content-between">
-        <h2 className="h3 mb-4">Welcome back, {username}!</h2>
         <NavLink
           to="/"
+          end
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({ isActive }) =>
-            isActive ? "btn btn-primary" : "btn btn-light"
+            isActive ? "btn btn-primary mb-2" : "btn btn-light mb-2"
           }
         >
           Home page
@@ -36,28 +24,25 @@ export const Nav = () => {
           Articles List
         </NavLink>
         <NavLink
-          to="/new-article"
+          to="/login"
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({ isActive }) =>
-            isActive ? "btn btn-primary" : "btn btn-light"
+            isActive ? "btn btn-primary mb-2" : "btn btn-light mb-2"
           }
         >
-          Create Article
+          Log In
         </NavLink>
+
         <NavLink
-          to="/exercises"
+          to="/join"
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({ isActive }) =>
-            isActive ? "btn btn-primary" : "btn btn-light"
+            isActive ? "btn btn-primary mb-2" : "btn btn-light mb-2"
           }
         >
-          React Exercises
+          Join
         </NavLink>
       </div>
-
-      <Button onClick={handleClick} className="btn-danger mt-auto">
-        Log Out
-      </Button>
     </div>
   );
 };
