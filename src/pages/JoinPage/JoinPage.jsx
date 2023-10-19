@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { registerThunk } from "../../redux/users/usersThunk";
-import { toast } from "react-toastify";
 
 const year = new Date().getFullYear();
 const initialState = {
@@ -15,7 +14,6 @@ export const JoinPage = () => {
   const [form, setForm] = useState(initialState);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -26,11 +24,6 @@ export const JoinPage = () => {
     event.preventDefault();
     console.log(form);
     dispatch(registerThunk(form))
-      .unwrap()
-      .then(() => {
-        navigate("/articles");
-      })
-      .catch((error) => toast.error(error.message));
   };
 
   return (

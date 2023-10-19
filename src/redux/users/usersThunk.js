@@ -45,6 +45,7 @@ export const getUserThunk = createAsyncThunk(
       const data = await getUserService();
       return data;
     } catch (error) {
+      token.unset()
       return rejectWithValue();
     }
   }

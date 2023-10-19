@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { loginThunk } from "../../redux/users/usersThunk";
-import { toast } from "react-toastify";
 
 const year = new Date().getFullYear();
 
@@ -16,7 +15,7 @@ export const LoginPage = () => {
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -27,11 +26,6 @@ export const LoginPage = () => {
     event.preventDefault();
     console.log(form);
     dispatch(loginThunk(form))
-      .unwrap()
-      .then(() => {
-        navigate("/articles");
-      })
-      .catch((error) => toast.error(error.message));
   };
 
   return (

@@ -1,15 +1,16 @@
-import axios from "axios";
+import { publicApi, privateApi } from "./http";
 
-const commentsApi = axios.create({
-  baseURL: "https://dummyjson.com/comments/post/",
-});
-
-const getRandomPostId = (max) => {
-  return Math.round(Math.random() * max);
+export const getCommentsService = async (articleId) => {
+  const { data } = await publicApi.get("comments/" + articleId.toString());
+  return data;
 };
 
-export const getComments = async () => {
-  const postId = getRandomPostId(100);
-  const { data } = await commentsApi.get(postId.toString());
-  return data?.comments;
+export const createCommentService = async (body) => {
+  const { data } = await privateApi.post("comments", body);
+  return data;
+};
+
+export const deleteCommentsService = async (articleId) => {
+  const { data } = await privateApi.delete("comments/" + articleId.toString());
+  return data;
 };

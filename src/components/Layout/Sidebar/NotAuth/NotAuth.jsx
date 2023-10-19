@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 export const NotAuth = () => {
+  const location = useLocation();
+  
   return (
     <div className="d-flex flex-column justify-content-between h-100">
       <div className="d-flex flex-column justify-content-between">
@@ -24,6 +26,7 @@ export const NotAuth = () => {
           Articles List
         </NavLink>
         <NavLink
+          state={{ ...location.state, fromLogin: location }}
           to="/login"
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({ isActive }) =>
@@ -34,6 +37,7 @@ export const NotAuth = () => {
         </NavLink>
 
         <NavLink
+          state={{ ...location.state, fromLogin: location }}
           to="/join"
           style={{ textAlign: "left", marginLeft: "-10px" }}
           className={({ isActive }) =>

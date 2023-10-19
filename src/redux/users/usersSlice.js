@@ -47,6 +47,7 @@ const usersSlice = createSlice({
         state.status = fetchStatus.SUCCESS;
         state.data = payload;
       })
+      .addCase(getUserThunk.rejected, () => initialState)
       .addCase(logoutThunk.fulfilled, () => initialState)
   },
 });
