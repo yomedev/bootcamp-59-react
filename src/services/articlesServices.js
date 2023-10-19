@@ -1,7 +1,7 @@
-import {publicApi, privateApi} from './http'
+import { publicApi, privateApi } from "./http";
 
-export const getArticlesService = async () => {
-  const { data } = await publicApi.get("articles");
+export const getArticlesService = async (params) => {
+  const { data } = await publicApi.get("articles", { params });
   return data;
 };
 

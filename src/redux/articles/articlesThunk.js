@@ -5,8 +5,8 @@ import {
   getArticlesService,
 } from "../../services/articlesServices";
 
-export const getArticlesThunk = createAsyncThunk("articles/getArticles", () =>
-  getArticlesService()
+export const getArticlesThunk = createAsyncThunk("articles/getArticles", (params) =>
+  getArticlesService(params)
 );
 
 export const deleteArticleThunk = createAsyncThunk(
